@@ -1,0 +1,8 @@
+# Dependency directories
+node_modules/
+drizzle/
+
+# dotenv environment variables file
+.env
+
+# End of https://mrkandreev.name/snippets/gitignore-generator/#Node

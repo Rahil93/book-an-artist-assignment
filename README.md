@@ -78,7 +78,6 @@ npm test
 
 ## Trade-offs I accepted
 
-- **The double-booking check is not race-safe.** It reads for overlaps and then inserts, with no lock or transaction. Two requests at the same instant could both pass. Fine for an assignment-sized project; in production I'd wrap it in a transaction with `SELECT ... FOR UPDATE`. Also, since the check only looks at *confirmed* bookings, the status-change endpoint doesn't re-check overlaps when an artist confirms, so two overlapping pending bookings can both end up confirmed. That's a real gap.
 - **Reviews use skip/limit pagination.** Simple and gives page numbers, but it gets slow deep into big collections. Cursor-based would scale better.
 - For the booking status update API, we need to use a database transaction for the select and update operations. If two users hit the same API simultaneously, their requests may overlap and cause a race condition, leading to incorrect booking status updates.
 - Since I have created a repository folder, all SQL and MongoDB queries should be handled in the repository files, while the service files should contain the business logic.
